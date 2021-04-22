@@ -3,39 +3,28 @@ require 'open-uri'
 require 'dotenv'
 require 'pry'
 
-url_deputies = 'https://www.nosdeputes.fr/'
-
-def deputies_str(url)
-    begin
-        client = Nokogiri::HTML(URI.open(url))
-    rescue => e
-        puts "Exception Message: #{ e.message }"
-    end
-    return client
+def get_email(deputy_url)
+    res_hash = {}
+	page = Nokogiri::HTML(URI.open(deputy_url))
+	email = page.xpath('//*[@id="b1"]/ul[2]/li[1]/ul/li/a').text
+	name = page.css('h1').text.split(' ')
+    first_name = name[0]
+    last_name = name[1]
+	#puts "#{first_name} / #{last_name} / #{email}"
+    res_hash = {"first_name" => first_name, "last_name" => last_name, "email" => email}
+    return res_hash
 end
 
-def get_deputy(url)
-    connect = deputies_str(url)
-    p deputy = connect.css('.boite_depute ul[4] li[1] li[1] a').text
-    return deputy
-end
-
-def get_deputies_list(url)
-    deputies_hash = {}
-    p deputies_row = deputies_str("#{url}deputes").css('.liste')
-    return false if deputies_row.length < 1
-    deputies_row.each.with_index { |n,i|
-        #puts deputies_href = n.css('td.list_borderleft a .phototitle .urlphoto').attr('title')
-        puts deputies_href = n.css('.urlphoto').attr('title')
-        #p deputies_hash = n.css('list_nom')
+def get_urls()
+	doc = Nokogiri::HTML(URI.open("https://www.nosdeputes.fr/deputes"))
+	div_class = doc.xpath('//div[@class="list_table"]')
+	all_a = div_class.css('a')
+	all_urls = all_a.map { |element| urls = 'https://nosdeputes.fr'+element["href"] }
+    res_arr = []
+	all_urls.each { |url|
+        p res_arr.push(get_email(url))
     }
-    # puts s
+    return res_arr
 end
 
-def perform(url)
-    towns = deputies_str(url)
-    #get_deputy("#{url}julien-aubert")
-    get_deputies_list(url)
-end
-
-perform(url_deputies)
+get_urls
