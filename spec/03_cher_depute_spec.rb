@@ -1,2 +1,2 @@
-require_relative '../lib/03_cher_depute_spec'
+require_relative '../lib/03_cher_depute'
 

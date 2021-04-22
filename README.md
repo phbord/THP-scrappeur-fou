@@ -21,7 +21,15 @@
 2. récupère les __URLs__ de chaque __ville du Val d'Oise__
    - *get_townhall_urls*
 3. chaque méthode marche séparément, imbrique les 2
+   - enregistrer les données dans un array de hash
+   - a = [{ "ville_1" => "email_1" }, ...]
 4. __tests__ : même chose que pour l'exercice précédent
 
 ## 3. Cher député
-- 
+- récupérer la liste complète des députés de France
+  - first_name
+  - last_name
+  - email
+- sortie : array de hashs
+  - a = [{"first_name" => "Jean", "last_name" => "Durant", "email" => "jean.durant@assemblée.fr"}, {...}, ...]
+- __tests__ : même chose que pour les exercices précédents

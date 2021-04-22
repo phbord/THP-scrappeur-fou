@@ -3,16 +3,16 @@ require 'open-uri'
 require 'dotenv'
 require 'pry'
 
+cryptos_hash = {}
+
 def cryptos_str()
     begin
-        client = Nokogiri::HTML(open('https://coinmarketcap.com/all/views/all/'))
+        client = Nokogiri::HTML(URI.open('https://coinmarketcap.com/all/views/all/'))
     rescue => e
         puts "Exception Message: #{ e.message }"
     end
     return client
 end
-
-cryptos_hash = {}
 
 def get_cryptos(s, h)
     crypto_row = s.css('table tbody tr.cmc-table-row')
