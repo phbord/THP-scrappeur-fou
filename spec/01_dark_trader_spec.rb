@@ -2,8 +2,8 @@ require_relative '../lib/01_dark_trader'
 
 describe "the array cryptos function" do
     it "should return a string" do
-        expect(cryptos_arr).not_to be_nil
-        expect(cryptos_arr).to be_a(Nokogiri::HTML::Document)
+        expect(cryptos_str).not_to be_nil
+        expect(cryptos_str).to be_a(Nokogiri::HTML::Document)
     end
 end
 
